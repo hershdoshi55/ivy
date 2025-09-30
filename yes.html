@@ -5,115 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Yay!! 💖</title>
     <style>
-      :root {
-        --bg1: #f9e6ff;
-        --bg2: #e6fff6;
-        --card: #ffffffcc;
-        --text: #334155;
-        --accent: #bfdbfe;
-        --accent-ink: #1e3a8a;
+      :root{
+        --bg1:#f9e6ff; --bg2:#e6fff6;
+        --card:#ffffffcc; --text:#334155;
+        --accent:#bfdbfe; --accent-ink:#1e3a8a;
       }
-      * {
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-        color: var(--text);
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      *{ box-sizing:border-box }
+      html, body{ height:100% }
+      body{
+        margin:0; color:var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
         background: radial-gradient(60% 60% at 50% 40%, var(--bg2), var(--bg1));
-        display: grid;
-        place-items: center;
-        overflow: hidden;
+        display:grid; place-items:center;
+        overflow:hidden;
+        padding: max(8px, env(safe-area-inset-top))
+                 max(8px, env(safe-area-inset-right))
+                 max(8px, env(safe-area-inset-bottom))
+                 max(8px, env(safe-area-inset-left));
       }
-      .wrap {
-        position: relative;
-        width: min(820px, 92vw);
-        min-height: 70vh;
-        padding: 28px;
+      .wrap{ position:relative; width:min(860px, 94vw); min-height:70vh; padding: clamp(16px, 3vw, 28px) }
+      .card{
+        position:relative; z-index:2;
+        background:var(--card); backdrop-filter:saturate(120%) blur(6px);
+        border-radius:26px; box-shadow:0 10px 30px #00000014;
+        padding: clamp(18px, 3vw, 28px); text-align:center;
       }
-      .card {
-        position: relative;
-        z-index: 2;
-        background: var(--card);
-        backdrop-filter: saturate(120%) blur(6px);
-        border-radius: 26px;
-        box-shadow: 0 10px 30px #00000014;
-        padding: 28px;
-        text-align: center;
+      h1{ margin:0 0 12px; font-size: clamp(1.6rem, 6.2vw, 2.6rem) }
+      p{
+        margin:8px 0 14px; line-height:1.55;
+        font-size: clamp(0.95rem, 3.8vw, 1.05rem);
       }
-      h1 {
-        margin: 0 0 10px;
-        font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+      .gif-box{ display:flex; justify-content:center; margin-top: 6px }
+      .gif-box iframe, .gif-box img{ max-width:100%; height:auto; border-radius:18px; box-shadow:0 8px 20px #00000012 }
+
+      .cta{ display:flex; justify-content:center; margin-top:18px }
+      .btn{
+        border:none; padding: clamp(12px, 3.6vw, 14px) clamp(18px, 5vw, 22px);
+        border-radius:999px; font-weight:800; cursor:pointer;
+        box-shadow:0 6px 16px #0000001a; transition:transform .08s ease;
+        background:#fff; color:#334155; font-size: clamp(1rem, 4vw, 1.05rem);
       }
-      p {
-        margin: 8px 0 14px;
-      }
-      .gif-box {
-        display: flex;
-        justify-content: center;
-      }
-      .gif-box img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 18px;
-        box-shadow: 0 8px 20px #00000012;
+      .btn:active{ transform:scale(0.98) }
+
+      /* floating pastel flowers */
+      .flower{ position:fixed; z-index:1; opacity:.85; filter:drop-shadow(0 4px 8px #00000022) }
+      @keyframes bloomUp{
+        0%{transform:translateY(20vh) scale(0.7); opacity:0}
+        10%{opacity:.95}
+        100%{transform:translateY(-110vh) scale(1.2); opacity:0}
       }
 
-      .cta {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        margin-top: 18px;
-      }
-      .btn {
-        border: none;
-        padding: 14px 22px;
-        border-radius: 999px;
-        font-weight: 800;
-        cursor: pointer;
-        box-shadow: 0 6px 16px #0000001a;
-        transition: transform 0.08s ease;
-      }
-      .btn:active {
-        transform: scale(0.98);
-      }
-      .btn-ghost {
-        background: #ffffff;
-        color: #334155;
-      }
-
-      /* Floating hearts background */
-      .heart {
-        position: fixed;
-        z-index: 1;
-        opacity: 0.75;
-        filter: drop-shadow(0 4px 8px #00000022);
-      }
-      @keyframes floatUp {
-        0% {
-          transform: translateY(20vh) scale(0.9);
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.9;
-        }
-        100% {
-          transform: translateY(-110vh) scale(1.1);
-          opacity: 0;
-        }
-      }
-
-      canvas#confetti {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-      }
+      canvas#confetti{ position:fixed; inset:0; z-index:0; pointer-events:none }
     </style>
   </head>
   <body>
@@ -123,100 +65,83 @@
         <h1>Welcome Home My Starbright! ✨💖</h1>
         <p>
           Every day with you has genuinely been bliss, I'm so grateful you chose
-          me and theres nothing in this world, galaxy, or universe which could
-          make me happier, You are my peace and solace you give me so much
-          unconditional love and affection life doesnt feel real. I can't wait
-          to see what our future has in store for us, but all I know is that we
-          are going to be happy together. We will surpass hurdles together and
-          celebrate our victories together, I seriously Love You my Ivy. Thank
-          you for giving me this oppurtunity to be your partner and cherish you
-          I wont ever make you regret it. It still doesn't feel real
+          me and there’s nothing in this world, galaxy, or universe which could
+          make me happier. You are my peace and solace; you give me so much
+          unconditional love and affection life doesn’t feel real. I can't wait
+          to see what our future has in store for us — we’ll surpass hurdles
+          together and celebrate our victories together. I seriously love you,
+          my Ivy. Thank you for giving me this opportunity to be your partner
+          and cherish you — I won’t ever make you regret it.
         </p>
-        <p>-Sincerely Hersh</p>
+        <p>— Sincerely, Hersh</p>
+
         <div class="gif-box" aria-label="happy gif">
-          <div
-            class="tenor-gif-embed"
-            data-postid="5041605467437889611"
-            data-share-method="host"
-            data-aspect-ratio="1.3333"
-            data-width="100%"
-          >
-            <a
-              href="https://tenor.com/view/yay-cinnamoroll-cute-gif-5041605467437889611"
-              >Yay Cinnamoroll Cute</a
-            >
+          <!-- Tenor embed (responsive) -->
+          <div class="tenor-gif-embed"
+               data-postid="5041605467437889611"
+               data-share-method="host"
+               data-aspect-ratio="1.3333"
+               data-width="100%">
+            <a href="https://tenor.com/view/yay-cinnamoroll-cute-gif-5041605467437889611">Yay Cinnamoroll Cute</a>
           </div>
           <script async src="https://tenor.com/embed.js"></script>
         </div>
+
         <div class="cta">
-          <a class="btn btn-ghost" href="index.html">Replay, My Love?</a>
+          <a class="btn" href="index.html">Replay, My Love?</a>
         </div>
       </div>
     </div>
 
     <script>
-      (function () {
-        const canvas = document.getElementById("confetti");
-        const ctx = canvas.getContext("2d");
-        let w,
-          h,
-          pieces = [];
-        const COLORS = ["#fca5a5", "#fde68a", "#a7f3d0", "#bfdbfe", "#ddd6fe"];
-        const rand = (min, max) => Math.random() * (max - min) + min;
-        function resize() {
-          w = canvas.width = window.innerWidth;
+      (function(){
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        let w, h, pieces = [];
+        const COLORS = ['#fca5a5','#a7f3d0','#bfdbfe','#ddd6fe']; // pastel set
+        const rand=(min,max)=>Math.random()*(max-min)+min;
+
+        function resize(){
+          w = canvas.width  = window.innerWidth;
           h = canvas.height = window.innerHeight;
+          // Recompute particle count based on area / DPR
+          const count = Math.min(180, Math.max(80, Math.floor((w*h)/(10000*window.devicePixelRatio))));
+          pieces = [];
+          for(let i=0;i<count;i++){
+            pieces.push({x:rand(0,w), y:rand(-h,0), r:rand(4,8), s:rand(1,2.4), a:rand(0,Math.PI*2), c:COLORS[Math.floor(rand(0,COLORS.length))]});
+          }
         }
-        window.addEventListener("resize", resize);
-        resize();
-        for (let i = 0; i < 160; i++)
-          pieces.push({
-            x: rand(0, w),
-            y: rand(-h, 0),
-            r: rand(4, 8),
-            s: rand(1, 2.6),
-            a: rand(0, 2 * Math.PI),
-            c: COLORS[Math.floor(rand(0, COLORS.length))],
-          });
-        function draw() {
-          ctx.clearRect(0, 0, w, h);
-          for (const p of pieces) {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.a);
-            ctx.fillStyle = p.c;
-            ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r);
+        window.addEventListener('resize', resize); resize();
+
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          for(const p of pieces){
+            ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a);
+            ctx.fillStyle=p.c; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);
             ctx.restore();
-            p.y += p.s;
-            p.x += Math.sin(p.y / 15);
-            p.a += 0.02;
-            if (p.y > h + 20) {
-              p.y = -20;
-              p.x = rand(0, w);
-            }
+            p.y+=p.s; p.x+=Math.sin(p.y/18); p.a+=0.02;
+            if(p.y>h+20){ p.y=-20; p.x=rand(0,w); }
           }
           requestAnimationFrame(draw);
         }
         draw();
       })();
 
-      (function spawnHearts() {
-        const EMO = "💖 💘 💝 💗 💕".split(" ");
-        function addHeart() {
-          const span = document.createElement("span");
-          span.className = "heart";
-          span.textContent = EMO[Math.floor(Math.random() * EMO.length)];
-          span.style.left = Math.random() * 100 + "vw";
-          span.style.bottom = "-10vh";
-          span.style.fontSize = Math.random() * 32 + 18 + "px";
-          span.style.animation = `floatUp ${
-            Math.random() * 6 + 8
-          }s linear forwards`;
+      (function spawnFlowers(){
+        const EMO = '🌸 🌷 💐'.split(' ');
+        function add(){
+          const span = document.createElement('span');
+          span.className='flower';
+          span.textContent = EMO[Math.floor(Math.random()*EMO.length)];
+          span.style.left = Math.random()*100+'vw';
+          span.style.bottom='-10vh';
+          span.style.fontSize=(Math.random()*36+20)+'px';
+          span.style.animation=`bloomUp ${Math.random()*6+8}s linear forwards`;
           document.body.appendChild(span);
-          setTimeout(() => span.remove(), 15000);
+          setTimeout(()=>span.remove(), 15000);
         }
-        for (let i = 0; i < 10; i++) setTimeout(addHeart, i * 350);
-        setInterval(addHeart, 900);
+        for(let i=0;i<8;i++) setTimeout(add, i*350);
+        setInterval(add, 1100);
       })();
     </script>
   </body>
